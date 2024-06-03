@@ -21,4 +21,5 @@ expo-env.d.ts
 
 /ios
 /android
-/constants/Commerce.ts
+
+.env*.local

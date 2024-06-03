@@ -27,6 +27,10 @@ import { auth$ } from "../store/auth";
 import { useWhenReady } from "@legendapp/state/react";
 import { redirect_uri } from "@/constants/Commerce";
 import { config } from "@/constants/Commerce";
+import { syncObservable, configureObservableSync } from "@legendapp/state/sync";
+import { ObservablePersistMMKV } from "@legendapp/state/persist-plugins/mmkv";
+
+import { enableReactComponents } from "@legendapp/state/config/enableReactComponents";
 
 const CommerceCtx = createContext({} as ApiClients);
 
@@ -34,11 +38,26 @@ export function useCommerceKit() {
   return useContext(CommerceCtx);
 }
 
+enableReactComponents();
+
+// Setup global persist configuration
+configureObservableSync({
+  persist: {
+    plugin: ObservablePersistMMKV,
+  },
+});
+
 export default function CommerceProvider({
   children,
 }: {
   children: ReactNode;
 }) {
+  syncObservable(auth$, {
+    persist: {
+      name: "auth",
+    },
+  });
+
   const [apiClients, setApiClient] = useState<ApiClients>({} as ApiClients);
 
   const { data, isSuccess } = useQuery({
