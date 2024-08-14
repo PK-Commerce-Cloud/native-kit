@@ -8,9 +8,11 @@ import {
 } from "commerce-sdk/dist/helpers/slasClient";
 import { config } from "@/constants/Commerce";
 
+/* safe url */
 export const urlSafe = (input: string) =>
   input.replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
 
+/* Login helper */
 export async function loginAsGuest(
   shopperLogin: ShopperLogin<ApiClientConfigParams>,
   redirect_uri: string

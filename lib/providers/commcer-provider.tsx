@@ -15,10 +15,7 @@ import {
 import {
   ReactNode,
   createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
+  useContext, useState
 } from "react";
 import { ApiClients } from "../types";
 import { loginAsGuest } from "../helpers";
@@ -32,12 +29,16 @@ import { ObservablePersistMMKV } from "@legendapp/state/persist-plugins/mmkv";
 
 import { enableReactComponents } from "@legendapp/state/config/enableReactComponents";
 
+/* Commerce Context */
 const CommerceCtx = createContext({} as ApiClients);
 
 export function useCommerceKit() {
   return useContext(CommerceCtx);
 }
+/* Commerce Context */
 
+
+/* State management */
 enableReactComponents();
 
 // Setup global persist configuration
@@ -46,8 +47,10 @@ configureObservableSync({
     plugin: ObservablePersistMMKV,
   },
 });
+/* State management */
 
-export default function CommerceProvider({
+
+export default function Commerce({
   children,
 }: {
   children: ReactNode;
@@ -60,11 +63,13 @@ export default function CommerceProvider({
 
   const [apiClients, setApiClient] = useState<ApiClients>({} as ApiClients);
 
+  /* Rebuild auth logic, dont use the helper from commerce-sdk */
   const { data, isSuccess } = useQuery({
     queryKey: ["auth"],
     queryFn: async () => {
       console.log("auth", new Date());
 
+      /* New login helper /lib/helpers/index */
       const data = await loginAsGuest(new ShopperLogin(config), redirect_uri);
       return data;
     },
@@ -75,6 +80,7 @@ export default function CommerceProvider({
     auth$.set(data);
   }
 
+  /* Use whenReady its from Legend State installed or use another approuch */
   useWhenReady(auth$, (value) => {
     const authConfig = {
       ...config,

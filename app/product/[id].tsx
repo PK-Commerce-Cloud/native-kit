@@ -1,4 +1,3 @@
-import EmptyList from "@/components/commerce/empty-list";
 import Loading from "@/components/commerce/loading";
 import VariantSelector from "@/components/commerce/variant-selector";
 import { useCommerceKit } from "@/lib/providers/commcer-provider";
@@ -7,7 +6,6 @@ import { useQuery } from "@tanstack/react-query";
 import currency from "currency.js";
 import { Image } from "expo-image";
 import { useGlobalSearchParams } from "expo-router";
-import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Button, H5, Paragraph, ScrollView, XStack, YStack } from "tamagui";
 

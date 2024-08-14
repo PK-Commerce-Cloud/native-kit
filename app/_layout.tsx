@@ -1,4 +1,6 @@
+/* Require node libs to avoid crypto error */
 require("node-libs-expo/globals");
+
 import CommerceProvider from "@/lib/providers/commcer-provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
